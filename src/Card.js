@@ -1,34 +1,27 @@
-import React, {Component} from 'react'
+import React from 'react'
 import './Card.css'
+import PropTypes from 'prop-types'
 
 const HIDDEN_SYMBOL = '❓'
 
-class Card extends Component {
+const Card = ({card, feedback, onClick}) => (
+    <div className={`card ${feedback}`} onClick={() => onClick(card)}>
+        <span className="symbol">
+          {feedback === 'hidden' ? HIDDEN_SYMBOL : card}
+        </span>
+    </div>
+)
 
-    constructor (props) {
+Card.propTypes = {
 
-        super(props)
-
-        this.card = props.card;
-
-        this.feedback = props.feedback;
-    }
-
-    render(){
-
-        return(
-            <div className={`card ${this.feedback}`} onClick={() => this.handleCardClick()}>
-                <span className="symbol">
-                    {this.feedback === 'hidden' ? HIDDEN_SYMBOL : this.card}
-                </span>
-            </div>
-        )
-    }
-
-    handleCardClick() {
-
-        console.log(this.card, 'clicked')
-    }
+    card : PropTypes.string.isRequired,
+    feedback : PropTypes.oneOf([
+        'visible',
+        'hidden',
+        'justMatched',
+        'justMismatched',
+    ]).isRequired,
+    onClick : PropTypes.func.isRequired,
 
 }
 
